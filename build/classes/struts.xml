@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<!-- START SNIPPET: xworkSample -->
+<struts>
+
+    <package name="labrary" extends="struts-default">
+    
+    	<action name="ret" class="action.HandleAction" method="retback">
+    		<result name="RetSuccess">/search.jsp</result>
+    	</action>
+		<action name="search" class="action.HandleAction" method="search">
+			<result name="SearchSuccess">/showbooks.jsp</result>
+			<result name="SearchFail">/fail.jsp</result>
+		</action>
+		
+		<action name="display" class="action.HandleAction" method="display">
+			<result name="DisplaySuccess">/display.jsp</result>
+			<result name="DisplayFail">/fail.jsp</result>
+		</action>
+		
+		<action name="delete" class="action.HandleAction" method="delete">
+			<result name="DeleteSuccess" type="redirect">/search.action?Authorname=${Authorname}</result>
+		</action>
+	
+       
+        
+    </package>
+
+
+</struts>
+
+<!-- END SNIPPET: xworkSample -->

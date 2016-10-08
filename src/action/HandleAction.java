@@ -14,7 +14,7 @@ import org.apache.struts2.ServletActionContext;
 import data.*;
 public class HandleAction {
 	private String Authorname;
-
+	private String AuthorID = "";
 	private db mydb = new db();
 	
 	public String getAuthorname()
@@ -27,11 +27,61 @@ public class HandleAction {
 	}
 	
 	
+	public String getAuthorID()
+	{
+		return AuthorID;
+	}
+	public void setAuthorID(String AuthorID)
+	{
+		this.AuthorID = AuthorID;
+	}
+	
+	public String addbk()
+	{
+		return "adbk";
+	}
+	
+	public String addar()
+	{
+		return "adar";
+	}
+	
 	public String search ()throws Exception
 	{
-		String sql = "select * from book where authorID=(select authorID from author where name='" + getAuthorname()+"')";
-		ResultSet rS = mydb.executeQuery(sql);
-		boolean empty = true;
+		String authorID = "";
+		String sql;
+		ResultSet rS ;
+		if(getAuthorID().equals(""))
+		{
+			sql = "select authorID from author where name='" + getAuthorname()+"'";
+			rS = mydb.executeQuery(sql);
+			
+			boolean empty = true;
+			while(rS.next())
+			{
+				authorID = rS.getString("authorID");
+				empty = false;
+			}
+			if(empty)
+			{
+				return "SearchFail";
+			}
+		}
+		
+		else
+		{
+			authorID=getAuthorID();
+			sql = "select name from author where authorID=" + authorID;
+			rS = mydb.executeQuery(sql);
+			while(rS.next())
+			{
+				setAuthorname(rS.getString("name"));
+			}
+		}
+		
+		
+		sql = "select * from book where authorID=" + authorID;
+		rS = mydb.executeQuery(sql);
 		List<book> bklist = new ArrayList<book>();
 		while(rS.next())
 		{
@@ -43,24 +93,19 @@ public class HandleAction {
 			mbk.setDate(rS.getString("publishdate"));
 			mbk.setPrice(rS.getInt("price"));
 			bklist.add(mbk);
-			empty = false;
 		}
-		if(empty)
-		{
-			return "SearchFail";
-		}
-		
+		 	
 		HttpServletRequest request = ServletActionContext.getRequest();
 		request.setAttribute("list", bklist);
         return "SearchSuccess";
-        
+       
 	}
 
 	
     public String display ()throws Exception
     {
-    	String arname = ServletActionContext.getRequest().getParameter("arname");
-    	String sql = "select * from author where name='"+arname+"'";
+    	String arID = ServletActionContext.getRequest().getParameter("arID");
+    	String sql = "select * from author where authorID="+arID;
     	author nar = new author();
     	ResultSet rS = mydb.executeQuery(sql);
     	while(rS.next())
@@ -77,8 +122,8 @@ public class HandleAction {
     	
     	
     	
-    	String bktitle = ServletActionContext.getRequest().getParameter("bktitle");
-    	String sql2 = "select * from book where title='" + bktitle +"'";
+    	String bkISBN = ServletActionContext.getRequest().getParameter("bkISBN");
+    	String sql2 = "select * from book where ISBN=" + bkISBN;
     	ResultSet rS2 = mydb.executeQuery(sql2);
     	book nmybk = new book();
     	while(rS2.next())
@@ -100,8 +145,20 @@ public class HandleAction {
 	
     public String delete() throws Exception
     {
-    	String arname = ServletActionContext.getRequest().getParameter("arname");
+    	String arID = ServletActionContext.getRequest().getParameter("arID");
+    	/*
+    	String sql = "select name from author where authorID="+arID;
+    	String arname="";
+    	ResultSet rs = mydb.executeQuery(sql);
+    	while(rs.next())
+    	{
+    		arname = rs.getString("name");
+    	}
+    	
     	setAuthorname(arname);
+    	System.out.println(getAuthorname());
+    	*/
+    	setAuthorID(arID);
     	String ISBN = ServletActionContext.getRequest().getParameter("bkISBN");
     	String sql = "delete from book where ISBN="+ISBN;
     	int result = mydb.executeUpdate(sql);
@@ -117,5 +174,36 @@ public class HandleAction {
     public String retback() throws Exception
     {
     	return "RetSuccess";
+    }
+    
+    public String toupdate() throws Exception
+    
+    {
+    	String ISBN = ServletActionContext.getRequest().getParameter("bkISBN");
+    	String sql = "select * from book where ISBN=" + ISBN;
+    	ResultSet rS = mydb.executeQuery(sql);
+    	book nmybk = new book();
+    	while(rS.next())
+    	{
+    		nmybk.setAuthorID(rS.getInt("authorID"));
+    		nmybk.setDate(rS.getString("publishdate"));
+    		nmybk.setISBN(rS.getInt("ISBN"));
+    		nmybk.setPrice(rS.getInt("price"));
+    		nmybk.setPublisher(rS.getString("publisher"));
+    		nmybk.setTitle(rS.getString("title"));
+    	}
+    	HttpServletRequest request = ServletActionContext.getRequest();
+    	request.setAttribute("book", nmybk);
+    	
+    	sql = "select name from author where authorID="+nmybk.getAuthorID();
+    	rS = mydb.executeQuery(sql);
+    	String authorname = "";
+    	while(rS.next())
+    	{
+    		authorname = rS.getString("name");
+    	}
+    	HttpServletRequest request2 = ServletActionContext.getRequest();
+    	request2.setAttribute("authorname", authorname);
+    	return "ToUpdate";
     }
 }

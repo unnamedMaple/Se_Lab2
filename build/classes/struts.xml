@@ -23,10 +23,35 @@
 		</action>
 		
 		<action name="delete" class="action.HandleAction" method="delete">
-			<result name="DeleteSuccess" type="redirect">/search.action?Authorname=${Authorname}</result>
+			<result name="DeleteSuccess" type="redirectAction">/search.action?AuthorID=${AuthorID}</result>
+			<result name="DeleteFail">/fail.jsp</result>
+		</action>
+		
+		<action name="adbk" class="action.HandleAction" method="addbk">
+			<result name="adbk">/book.jsp</result>
+		</action>
+		
+		<action name="adar" class="action.HandleAction" method="addar">
+			<result name="adar">/author.jsp</result>
 		</action>
 	
-       
+        <action name="addbook" class="action.AddAction" method="addbook">
+       		<result name="AddSuccess">/success.jsp</result>
+       		<result name="AddAuthor">/author.jsp</result>
+        </action>
+        
+        <action name="addauthor" class="action.AuthorAction" method="addauthor">
+        	<result name="AdauSuccess">/success.jsp</result>
+        </action>
+        
+        <action name="toupdate" class="action.HandleAction" method="toupdate">
+        	<result name="ToUpdate">/update.jsp</result>
+        </action>
+        
+        <action name="update" class="action.UpdateAction" method="update">
+        	<result name="UpdateSuccess">/success.jsp</result>
+        	<result name="UpdateFail">/fail.jsp</result>
+        </action>
         
     </package>
 

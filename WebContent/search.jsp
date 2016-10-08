@@ -9,9 +9,16 @@
 </head>
 <body>
 <s:form action="search" method="post">
-	<s:textfield name="Authorname" label="作者"></s:textfield>
-	<s:submit value="查找"></s:submit>
+	<s:textfield name="Authorname" label="Author"></s:textfield><s:submit value="  Search  "></s:submit>
 </s:form>
-	
+
+<s:form action="adbk" method="post">
+	<s:submit value=" AddBook "></s:submit>
+</s:form>
+
+<s:form action="adar" method="post">
+	<s:submit value="AddAuthor"></s:submit>
+</s:form>
+
 </body>
 </html>

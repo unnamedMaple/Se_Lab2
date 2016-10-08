@@ -43,6 +43,5 @@
 		</tr>
 	</table>
 	<a href = <s:url value="ret.action"></s:url>>返回</a>
-	<s:debug></s:debug>
 </body>
 </html>

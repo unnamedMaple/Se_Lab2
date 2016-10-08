@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>fail</title>
+<title>success!</title>
 </head>
 <body>
-Fail!
+Success!
 <a href = <s:url value="ret.action"></s:url>>返回</a>	
 </body>
 </html>

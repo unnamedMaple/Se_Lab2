@@ -13,15 +13,16 @@
 	<table border="1" width="50%" cellpadding="0" cellspacing="0" align="center">  
 		<tr style="background-color: yellow">
 			<td align="center">Title</td>
-			<td align="center">Action</td>
+			<td align="center">Delete</td>
+			<td align="center">Update</td>
 		</tr>  
 		<s:iterator value="#request.list"> 
 			<tr>
 				<td align="center">
 					<a href=
 						<s:url value="display.action">
-							<s:param name="bktitle" value="title"/>
-							<s:param name="arname" value="Authorname"/>
+							<s:param name="bkISBN" value="ISBN"/>
+							<s:param name="arID" value="authorID"/>
 						</s:url>>
 						<s:property value="title"/>
 						</a>
@@ -30,15 +31,22 @@
 					<a href=
 						<s:url value="delete.action">
 							<s:param name="bkISBN" value="ISBN"/>
-							<s:param name="arname" value="Authorname"/>
+							<s:param name="arID" value="authorID"/>
 						</s:url>>
 						删除
-						</a>
+					</a>
+				</td>
+				<td align="center">
+					<a href=
+						<s:url value="toupdate.action">
+							<s:param name="bkISBN" value="ISBN"/>
+						</s:url>>
+						更新	
+					</a>
 				</td>
 			</tr>
 		</s:iterator>
 	</table>
 	<a href = <s:url value="ret.action"></s:url>>返回</a>
-	<s:debug></s:debug>
 </body>
 </html>

@@ -5,10 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>fail</title>
+<title>Author</title>
 </head>
 <body>
-Fail!
-<a href = <s:url value="ret.action"></s:url>>返回</a>	
+<s:form action="addauthor" method="post">
+	<s:textfield name="AuthorName" label="AuthorName"></s:textfield>
+	<s:textfield name="AuthorAge" label="AuthorAge"></s:textfield>
+	<s:textfield name="AuthorCountry" label="AuthorCountry"></s:textfield>
+	<s:submit value="addauthor"></s:submit>
+</s:form>
+
+
 </body>
 </html>
